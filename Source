@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+int main(){
+	int n, i, j, k;
+	double d, s;
+	cout << "PAZMEPHOCTj: " << endl;
+	cin >>n;
+	double **a = new double *[n];
+	for (i = 0; i < n; i++)
+		a[i] = new double [n];
+	double *b = new double [n];
+	double *x = new double [n];
+    cout << "KOEFF-TLI " << endl;
+    for (i = 0; i < n; i++){
+		for (j = 0; j < n; j++){
+			cout << "a[ " << i+1 << "," << j+1 << "]= ";
+			cin >> a[i][j];	
+		}
+		cout << "b[ " << i+1 << "]= ";
+		cin >> b[i];
+	}
+	for (k = 0; k < n; k++){
+		for (j = k + 1; j < n; j++){
+			d = a[j][k] / a[k][k];
+			for (i = k; i < n; i++){
+				a[j][i] = a[j][i] - d * a[k][i];
+			}
+			b[j] = b[j] - d * b[k];
+		}
+	}
+    cout <<  "MATRIX" << endl;
+    
+    for(int i =0; i<n; i ++){
+        for (int j =0; j<n; j++){
+            cout << a[i][j] << " ";
+        }
+        cout << b[i] <<endl;
+    }
+	for (k = n-1; k >= 0; k--){
+		if ( a[k][k] < 0.0000001 && a[k][k] > -0.0000001){
+			x[k]=0;
+	}
+		else{
+			d = 0;
+			for (j = k + 1; j < n; j++){
+				s = a[k][j] * x[j];
+				d +=s;
+			}
+			x[k] = (b[k] - d) / a[k][k];
+		}
+	}
+	cout << "KORHN CYCTEMLI: " << endl;
+	for( i = 0; i < n; i++){
+		if (x[i]== 0){
+			cout << "x[" << i +1<< "] - CBObODHAYA TTEPEMEHHAYA, pyst = 0 "<< endl;
+		}
+		else{
+			cout << "x[" << i +1<< "]=" << x[i] << " " << endl;
+		}
+	}
+	return 0;
+}
